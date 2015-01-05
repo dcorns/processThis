@@ -13,8 +13,8 @@ module.exports = function(clnt){
     retry = retry | 0;
     client = net.connect({port: clntport}, function(err){
       if(err) return cb(err, null);
-      console.log(clnt + 'connected to port ' + clntport);
-      client.write(clnt + 'connected');
+      console.log(clnt + ' connected to port ' + clntport);
+      client.write(clnt + ' connected');
     });
     client.on('data', function(data){
       console.log(data.toString());
@@ -24,7 +24,7 @@ module.exports = function(clnt){
     });
     client.on('error', function(err){
       if(err.code === 'ECONNREFUSED' && retry > 0){
-        console.log('Connection refused on port ' + prt + ', but will try ' + retry + ' times.');
+        console.log('Connection refused on port ' + prt + ', but will try ' + retry + ' more times.');
         retry--;
         cnct(prt,  retry);
       }
@@ -33,6 +33,5 @@ module.exports = function(clnt){
         client.end();
       }
     });
-    return client;
   };
 };

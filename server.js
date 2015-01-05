@@ -6,21 +6,24 @@
 var net = require('net');
 module.exports = function(svr){
   this.svr = svr;
-  var server;
+  //var server;
   this.start = function(svrport){
-    server = net.createServer(function(cnct){
+    this.server = net.createServer(function(cnct){
       console.log('client connected to ' + svr);
       cnct.on('end', function(){
-        console.log('client connected to ' + svr);
+        console.log('client disconnected from ' + svr);
       });
       cnct.write(svr + ' says hello\r\n');
-      cnct.pipe(cnct);
+      //cnct.pipe(cnct); //echo input
+      cnct.on('data', function(data){
+        console.log(data.toString().trim());
+      })
     });
-    server.listen(svrport, function(){
+    this.server.listen(svrport, function(){
       console.log(svr + ' listening on port ' + svrport);
     });
   };
   this.stop = function(){
-    server.close();
+    this.server.close();
   };
 };

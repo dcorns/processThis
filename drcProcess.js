@@ -17,6 +17,8 @@ runLs.run(['/','-al']);
 
 var firstServer = new Server('firstServer');
 firstServer.start(3000);
-//firstServer.stop();
+console.log(firstServer);
+
+firstServer.server.write('This is a test');
 var secondServer = new Server('secondServer');
 secondServer.start(3050);
