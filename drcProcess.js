@@ -5,6 +5,7 @@
 'use strict';
 var RunApp = require('./runApp');
 var Server = require('./server');
+var Client = require('./client');
 
 var runGedit = new RunApp('gedit');
 runGedit.run(['README.md']);
@@ -20,3 +21,9 @@ firstServer.start(3000);
 //firstServer.stop();
 var secondServer = new Server('secondServer');
 secondServer.start(3050);
+
+var firstClient = new Client('firstClient');
+firstClient.connect(3000);
+
+var secondClient = new Client('secondClient');
+secondClient.connect(3050);
