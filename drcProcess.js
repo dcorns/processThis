@@ -5,6 +5,7 @@
 'use strict';
 var RunApp = require('./runApp');
 var Server = require('./server');
+var parseInput = require('./parseInput');
 
 var runGedit = new RunApp('gedit');
 //runGedit.run(['README.md']);
@@ -17,30 +18,18 @@ runLs.run(['/','-al']);
 
 var firstServer = new Server('firstServer');
 firstServer.start(3000, function(err, cnn){
-  var dataIn
-    ,cmd
-    ,params
-    ,idx;
   cnn.on('data', function(data){
-    cmd = data.toString().trim();
-    idx = cmd.indexOf('-');
-    if(idx > -1){
-      try{
-        params = cmd.substr(idx + 1).split(' ');
-        cmd = cmd.substr(0,idx);
+    parseInput(data, function(err, obj){
+      if(err) cnn.write(err);
+      else {
+        console.log('new parse data is next');
+        console.dir(obj);
+        if(obj.cmd === 'gedit'){
+          runGedit.run(obj.params);
+          cnn.write('gedit started...\r\n');
+        }
       }
-      catch(e){
-        console.log('- without argument');
-        cnn.write('- without argument');
-      }
-
-      console.log('cmd:' + cmd + ' params:' + params);
-    }
-    console.log('post cmd:' + cmd);
-    if(cmd === 'gedit'){
-      runGedit.run(params);
-      cnn.write('gedit started...\r\n');
-    }
+    });
   });
 });
 console.dir(firstServer);
