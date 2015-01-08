@@ -7,7 +7,7 @@ var net = require('net');
 module.exports = function(svr){
   this.svr = svr;
   //var server;
-  this.start = function(svrport){
+  this.start = function(svrport, cb){
     this.server = net.createServer(function(cnct){
       console.log('client connected to ' + svr);
       cnct.on('end', function(){
@@ -15,9 +15,10 @@ module.exports = function(svr){
       });
       cnct.write(svr + ' says hello\r\n');
       //cnct.pipe(cnct); //echo input
-      cnct.on('data', function(data){
-        console.log(data.toString().trim());
-      })
+      //cnct.on('data', function(data){
+      //  console.log(data.toString().trim());
+      //});
+      return cb(null, cnct);
     });
     this.server.listen(svrport, function(){
       console.log(svr + ' listening on port ' + svrport);
