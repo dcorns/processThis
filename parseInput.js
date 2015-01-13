@@ -7,7 +7,7 @@ module.exports = function(data, cb){
   var result = {}
     ,idx;
   result.cmd = data.toString().trim();
-  idx = result.cmd.indexOf('-');
+  idx = result.cmd.indexOf('#');
   if(idx > -1){
     try{
       result.params = result.cmd.substr(idx + 1).split(' ');

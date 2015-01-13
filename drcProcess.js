@@ -7,16 +7,12 @@ var RunApp = require('./runApp');
 var Server = require('./server');
 var parseInput = require('./parseInput');
 
-var runGedit = new RunApp('gedit');
-//runGedit.run(['README.md']);
-
-var runNode = new RunApp('node');
-runNode.run(['--help']);
 
 var runLs = new RunApp('ls');
-runLs.run(['/','-al']);
+var runLsblk = new RunApp('lsblk');
 
 var firstServer = new Server('firstServer');
+
 firstServer.start(3000, function(err, cnn){
   cnn.on('data', function(data){
     parseInput(data, function(err, obj){
@@ -24,14 +20,24 @@ firstServer.start(3000, function(err, cnn){
       else {
         console.log('new parse data is next');
         console.dir(obj);
-        if(obj.cmd === 'gedit'){
-          runGedit.run(obj.params);
-          cnn.write('gedit started...\r\n');
+        if(obj.cmd === 'ls'){
+          runLs.run(obj.params, function(err, res){
+            res.stdout.on('data', function(ot){
+              console.log('output: '+ot);
+              cnn.write(ot);
+            });
+          });
+          cnn.write('Running ls...\r\n');
+        }
+        if(obj.cmd === 'lsblk'){
+          runLsblk.run(obj.params, function(err, res){
+            res.stdout.on('data', function(ot){
+              console.log('output: '+ot);
+              cnn.write(ot);
+            });
+          });
         }
       }
     });
   });
 });
-console.dir(firstServer);
-var secondServer = new Server('secondServer');
-secondServer.start(3050);

@@ -14,10 +14,6 @@ module.exports = function(svr){
         console.log('client disconnected from ' + svr);
       });
       cnct.write(svr + ' says hello\r\n');
-      //cnct.pipe(cnct); //echo input
-      //cnct.on('data', function(data){
-      //  console.log(data.toString().trim());
-      //});
       return cb(null, cnct);
     });
     this.server.listen(svrport, function(){
