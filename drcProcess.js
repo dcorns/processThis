@@ -20,24 +20,31 @@ firstServer.start(3000, function(err, cnn){
       else {
         console.log('new parse data is next');
         console.dir(obj);
-        if(obj.cmd === 'ls'){
-          runLs.run(obj.params, function(err, res){
-            res.stdout.on('data', function(ot){
-             // console.log('output: '+ot);
+        switch (obj.cmd){
+          case 'ls':
+            runLs.run(obj.params, function(err, res){
+              res.stdout.on('data', function(ot){
+              // console.log('output: '+ot);
               console.log('ls Request from client: ' + cnn._handle.fd);
               cnn.write(ot);
+              });
             });
-          });
-          cnn.write('Running ls...\r\n');
-        }
-        if(obj.cmd === 'lsblk'){
-          runLsblk.run(obj.params, function(err, res){
-            res.stdout.on('data', function(ot){
-             // console.log('output: '+ot);
+            break;
+          case 'lsblk':
+            runLsblk.run(obj.params, function(err, res){
+              res.stdout.on('data', function(ot){
+              // console.log('output: '+ot);
               console.log('lsblk Reqest from client: ' + cnn._handle.fd);
               cnn.write(ot);
+              });
             });
-          });
+            break;
+          default:
+            cnn.write('Enter a valid command\r\n');
+            cnn.write('ls, lsblk\r\n');
+            cnn.write('Use # to add parameters: example: ls#/\r\n');
+            cnn.write('Use - to add options: example: ls#/ -al\r\n');
+            break;
         }
       }
     });
