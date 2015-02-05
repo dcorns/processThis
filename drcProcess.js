@@ -23,7 +23,8 @@ firstServer.start(3000, function(err, cnn){
         if(obj.cmd === 'ls'){
           runLs.run(obj.params, function(err, res){
             res.stdout.on('data', function(ot){
-              console.log('output: '+ot);
+             // console.log('output: '+ot);
+              console.log('ls Request from client: ' + cnn._handle.fd);
               cnn.write(ot);
             });
           });
@@ -32,7 +33,8 @@ firstServer.start(3000, function(err, cnn){
         if(obj.cmd === 'lsblk'){
           runLsblk.run(obj.params, function(err, res){
             res.stdout.on('data', function(ot){
-              console.log('output: '+ot);
+             // console.log('output: '+ot);
+              console.log('lsblk Reqest from client: ' + cnn._handle.fd);
               cnn.write(ot);
             });
           });
