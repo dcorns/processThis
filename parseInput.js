@@ -17,9 +17,6 @@ module.exports = function(data, cb){
       console.log('- without argument');
       return cb('- without argument', null);
     }
-
-    console.log('cmd:' + result.cmd + ' params:' + result.params);
   }
-  console.log('post cmd:' + result.cmd);
   return cb(null, result);
 };

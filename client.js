@@ -25,7 +25,7 @@ module.exports = function(clnt){
     client.on('error', function(err){
       if(err.code === 'ECONNREFUSED' && retry > 0){
         console.log('Connection refused on port ' + prt + ', but will try ' + retry + ' more times.');
-        retry--;
+        retry--;//client
         cnct(prt,  retry);
       }
       else {
@@ -33,5 +33,6 @@ module.exports = function(clnt){
         client.end();
       }
     });
+    return client;
   };
 };

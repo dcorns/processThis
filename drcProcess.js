@@ -15,17 +15,15 @@ var firstServer = new Server('firstServer');
 
 firstServer.start(3000, function(err, cnn){
   cnn.on('data', function(data){
+    console.log('on data called');
     parseInput(data, function(err, obj){
       if(err) cnn.write(err);
       else {
-        console.log('new parse data is next');
-        console.dir(obj);
         switch (obj.cmd){
           case 'ls':
+            console.log('ls Request from client: ' + cnn.connectionID);
             runLs.run(obj.params, function(err, res){
               res.stdout.on('data', function(ot){
-              // console.log('output: '+ot);
-              console.log('ls Request from client: ' + cnn._handle.fd);
               cnn.write(ot);
               });
             });
@@ -33,7 +31,6 @@ firstServer.start(3000, function(err, cnn){
           case 'lsblk':
             runLsblk.run(obj.params, function(err, res){
               res.stdout.on('data', function(ot){
-              // console.log('output: '+ot);
               console.log('lsblk Reqest from client: ' + cnn._handle.fd);
               cnn.write(ot);
               });
