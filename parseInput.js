@@ -1,6 +1,9 @@
 /**
  * parseInput
  * Created by dcorns on 1/8/15.
+ * Check data received from remote client and return an object based on the data received representing the remote command
+ * Reserved character #: what follows is interpreted as a parameter and possibly options prefixed with a -
+ * Everything before the # is interpreted as a command
  */
 'use strict';
 module.exports = function(data, cb){

@@ -1,6 +1,7 @@
 /**
  * client.js
  * Created by dcorns on 1/4/15.
+ * Returns a new client object for connecting the the remote server, The clnt parameter becomes the ID of the connection
  */
 'use strict';
 var net = require('net');
@@ -14,7 +15,7 @@ module.exports = function(clnt){
     client = net.connect({port: clntport}, function(err){
       if(err) return cb(err, null);
       console.log(clnt + ' connected to port ' + clntport);
-      client.write(clnt + ' connected');
+      client.write('login:' + clnt);
     });
     client.on('data', function(data){
       console.log(data.toString());
