@@ -4,13 +4,8 @@
  */
 'use strict';
 var Client = require('./client');
-var net = require('net');
-
 var firstClient = new Client('firstClient');
 var cnt = firstClient.connect(3000, 10);
-
-//var secondClient = new Client('secondClient');
-//secondClient.connect(3050, 5);
 
 process.stdin.setEncoding('utf8');
 
