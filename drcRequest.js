@@ -15,7 +15,3 @@ process.stdin.on('readable', function() {
     cnt.write(chunk);
   }
 });
-
-process.stdin.on('end', function() {
-  process.stdout.write('end');
-});

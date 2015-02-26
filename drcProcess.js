@@ -29,19 +29,10 @@ firstServer.start(3000, function(err, cnn){
           switch (obj.cmd) {
             case 'ls':
               console.log('ls Request from client: ' + cnn.loginID);
-              runLs.run(obj.params, function (err, res) {
-                res.stdout.on('data', function (ot) {
-                  cnn.write(ot);
-                });
-              });
+              runLs.run(obj.params, cnn);
               break;
             case 'lsblk':
-              runLsblk.run(obj.params, function (err, res) {
-                res.stdout.on('data', function (ot) {
-                  console.log('lsblk Request from client: ' + cnn.loginID);
-                  cnn.write(ot);
-                });
-              });
+              runLsblk.run(obj.params, cnn);
               break;
             default:
               cnn.write('Enter a valid command\r\n');
