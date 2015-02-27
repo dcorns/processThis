@@ -18,7 +18,7 @@ firstServer.start(3000, function(err, cnn){
         if(obj.cmd.substr(0, 6) === 'login:'){
           cnn.loginID = obj.cmd.substr(6);
           cnn.write('Welcome ' + cnn.loginID + '\r\n');
-          cnn.write('The following are valid commands: ls, lsblk\r\n');
+          cnn.write('Warning, all commands are enabled:\r\n');
           cnn.write('Use # to add parameters: example: ls#/\r\n');
           cnn.write('Use - to add options: example: ls#/ -al or ls#-al\r\n');
           console.log(cnn.loginID + ' connected');
