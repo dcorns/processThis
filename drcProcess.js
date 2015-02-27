@@ -6,7 +6,6 @@
 var RunApp = require('./runApp');
 var Server = require('./server');
 var parseInput = require('./parseInput');
-
 var runApp = new RunApp();
 
 var firstServer = new Server('firstServer');

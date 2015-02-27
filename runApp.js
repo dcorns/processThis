@@ -1,7 +1,7 @@
 /**
  * runApp
  * Created by dcorns on 1/3/15.
- * Takes a valid os command makes and returns a new object used to run the command in node
+ * Returns a new object with a run method that executes os commands in node.
  */
 'use strict';
 module.exports = function(){
