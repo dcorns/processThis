@@ -4,13 +4,12 @@
  * Takes a valid os command makes and returns a new object used to run the command in node
  */
 'use strict';
-module.exports = function(app){
-  this.app = app;
-  this.run = function run(arg, cnn){
+module.exports = function(){
+  this.run = function run(arg, cnn, cmd){
       var spawn = require('child_process').spawn;
-        var proc = spawn(this.app, arg);
+        var proc = spawn(cmd, arg);
       proc.on('exit', function(code){
-        console.log(app + ' exit code:' + code);
+        console.log(cmd + ' exit code:' + code);
       });
       proc.stderr.on('data', function (data) {
         console.log('stderr: ' + data);

@@ -7,8 +7,7 @@ var RunApp = require('./runApp');
 var Server = require('./server');
 var parseInput = require('./parseInput');
 
-var runLs = new RunApp('ls');
-var runLsblk = new RunApp('lsblk');
+var runApp = new RunApp();
 
 var firstServer = new Server('firstServer');
 
@@ -26,21 +25,7 @@ firstServer.start(3000, function(err, cnn){
           console.log(cnn.loginID + ' connected');
         }
         else {
-          switch (obj.cmd) {
-            case 'ls':
-              console.log('ls Request from client: ' + cnn.loginID);
-              runLs.run(obj.params, cnn);
-              break;
-            case 'lsblk':
-              runLsblk.run(obj.params, cnn);
-              break;
-            default:
-              cnn.write('Enter a valid command\r\n');
-              cnn.write('ls, lsblk\r\n');
-              cnn.write('Use # to add parameters: example: ls#/\r\n');
-              cnn.write('Use - to add options: example: ls#/ -al\r\n');
-              break;
-          }
+          runApp.run(obj.params, cnn, obj.cmd);
         }
       }
     });
