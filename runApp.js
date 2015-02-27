@@ -14,6 +14,7 @@ module.exports = function(app){
       });
       proc.stderr.on('data', function (data) {
         console.log('stderr: ' + data);
+        cnn.write(data);
       });
       proc.stdout.on('data', function (ot) {
         cnn.write(ot);
