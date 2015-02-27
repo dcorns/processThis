@@ -21,5 +21,6 @@ module.exports = function(data, cb){
       return cb('- without argument', null);
     }
   }
+  console.dir(result);
   return cb(null, result);
 };
