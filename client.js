@@ -6,16 +6,15 @@
 'use strict';
 var net = require('net');
 module.exports = function(clnt){
-  var client, prt;
-  this.connect = function cnct(clntport, retry){
-    prt = clntport;
+  var client;
+  this.connect = function cnct(clntport, host, retry){
     retry = retry | 0;
-    client = net.connect({port: prt}, function(err){
+    client = net.connect({port: clntport, host: host}, function(err){
       if(err) {
-        console.log(clnt + ' unable to connect to port ' + prt);
+        console.log(clnt + ' unable to connect to port ' + clntport + ' at ' + host);
       }
       else{
-        console.log(clnt + ' connected to port ' + prt);
+        console.log(clnt + ' connected to port ' + clntport + ' at ' + host);
         client.write('login:' + clnt);
       }
 
@@ -24,13 +23,13 @@ module.exports = function(clnt){
       console.log(data.toString());
     });
     client.on('end', function(){
-      console.log('Disconnected from port ' + prt);
+      console.log('Disconnected from port ' + clntport);
     });
     client.on('error', function(err){
       if(err.code === 'ECONNREFUSED' && retry > 0){
-        console.log('Connection refused on port ' + prt + ', but will try ' + retry + ' more times.');
+        console.log('Connection refused on port ' + clntport + ' at ' + host + ', but will try ' + retry + ' more times.');
         retry--;//client
-        cnct(prt,  retry);
+        cnct(clntport, host, retry);
       }
       else {
         console.dir(err);

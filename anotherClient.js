@@ -5,7 +5,7 @@
 'use strict';
 var Client = require('./client');
 var client = new Client('anotherClient');
-var cnt = client.connect(3000, 10);
+var cnt = client.connect(3000, 'localhost', 10);
 
 process.stdin.setEncoding('utf8');
 
