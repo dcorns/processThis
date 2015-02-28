@@ -6,7 +6,6 @@
 'use strict';
 var net = require('net');
 module.exports = function(svr){
-  this.svr = svr;
   this.start = function(svrport, cb){
     this.server = net.createServer(function(cnct){
       return cb(null, cnct);
