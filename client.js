@@ -6,7 +6,6 @@
 'use strict';
 var net = require('net');
 module.exports = function(clnt){
-  this.clnt = clnt;
   var client, prt;
   this.connect = function cnct(clntport, retry){
     prt = clntport;
