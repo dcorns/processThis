@@ -6,7 +6,7 @@
 'use strict';
 module.exports = function(){
   this.run = function run(arg, cnn, cmd){
-      var spawn = require('child_process').spawn;
+    var spawn = require('child_process').spawn;
         var proc = spawn(cmd, arg);
       proc.on('exit', function(code){
         console.log(cmd + ' exit code:' + code);
