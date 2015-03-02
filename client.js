@@ -23,7 +23,7 @@ module.exports = function(clnt){
       console.log(data.toString());
     });
     client.on('end', function(){
-      console.log('Disconnected from port ' + clntport);
+      console.log('Disconnected from ' + host + ' port ' + clntport);
     });
     client.on('error', function(err){
       if(err.code === 'ECONNREFUSED' && retry > 0){
